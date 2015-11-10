@@ -9,7 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.androidhive.loginandregister.R;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class CheckInActivity extends Activity
 {
@@ -37,10 +43,21 @@ public class CheckInActivity extends Activity
 
             public void onClick(View v) {
 
-WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-WifiInfo wInfo = wifiManager.getConnectionInfo();
-String macAddress = wInfo.getMacAddress();
-                //String macAddress = new String("Bla Bla Bla");
+                WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                WifiInfo wInfo = wifiManager.getConnectionInfo();
+                String macAddress = wInfo.getMacAddress();
+                        try {
+                            Socket connection = new Socket("192.169.1.2",85); //open connection with my local server ip
+                            DataOutputStream output = new DataOutputStream(connection.getOutputStream());
+                            output.writeUTF(macAddress);
+                            output.flush();
+                            output.close();
+                            connection.close();
+                        } catch (UnknownHostException e) {
+                            System.out.println("problem connecting to specified address");
+                        } catch (IOException e) {
+                            System.out.println("problem connecting to port");
+                        }
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), MainPage.class);
                 i.putExtra("KEY_StringMacAddress", macAddress);
