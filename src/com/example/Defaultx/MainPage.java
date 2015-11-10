@@ -17,6 +17,9 @@ public class MainPage extends Activity {
         super.onCreate(savedInstanceState);
         // Set View to main.xml
         setContentView(R.layout.main);
+        TextView macAddressField = (TextView) findViewById(R.id.macAdressField);
+        //macAddressField.append(mac);
+        macAddressField.setText(getIntent().getStringExtra("KEY_StringMacAddress"));
 
         Button btnCheckOut = (Button) findViewById(R.id.btnCheckOut);
         // Listening to Login Screen link
@@ -29,4 +32,5 @@ public class MainPage extends Activity {
             }
         });
     }
+
 }

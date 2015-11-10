@@ -1,8 +1,10 @@
 package com.example.Defaultx;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.androidhive.loginandregister.R;
 
@@ -16,7 +18,7 @@ public class RequestCode extends Activity {
         super.onCreate(savedInstanceState);
         // Set View to newcode.xml
         setContentView(R.layout.newcode);
-
+        Button btnCodeSent = (Button) findViewById(R.id.btnSndCode);
         TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
 
         // Listening to Login Screen link
@@ -25,6 +27,17 @@ public class RequestCode extends Activity {
             public void onClick(View arg0) {
                 // Closing request code screen
                 // Switching to Login Screen/closing request code screen
+                finish();
+            }
+        });
+
+        // Listening to log in button
+        btnCodeSent.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to New Code screen
+                Intent i = new Intent(getApplicationContext(), codeSent.class);
+                startActivity(i);
                 finish();
             }
         });

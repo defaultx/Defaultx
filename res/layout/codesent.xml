@@ -6,7 +6,7 @@
         android:fillViewport="true">
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:background="#ffdacfda">
+            android:layout_height="wrap_content" android:background="#d45cd7d8">
 
         <!-- Main Form -->
         <LinearLayout
@@ -22,38 +22,32 @@
             <ImageView android:src="@drawable/ic_launcher"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
+                       android:layout_marginTop="0dip"
                        android:layout_gravity="center_horizontal"/>
             <!-- Logo Ends -->
 
             <TextView android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="10dip"
-                      android:text="Hello there..."
+                      android:text="Code Sent!"
                       android:gravity="center"
                       android:textSize="36dip"
-                      android:textColor="#ff010000"/>
+                      android:textColor="#ffffffff"/>
 
             <TextView android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="10dip"
-                      android:text="Please leave your NFC turned on!"
+                      android:text="Please check your email."
                       android:gravity="center"
                       android:textSize="20dip"
-                      android:textColor="#ff1d1d1d"/>
-
-            <TextView android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="10dip"
-                      android:gravity="center"
-                      android:textSize="20dip"
-                      android:textColor="#ff1d1d1d" android:id="@+id/macAdressField"/>
+                      android:textColor="#ffd1d1d1"/>
             <!-- Login button -->
-            <Button android:id="@+id/btnCheckOut"
+            <Button android:id="@+id/btnCheckInC"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:text="Check Out"
-                    android:backgroundTint="#fff8675d"
+                    android:layout_marginTop="20dip"
+                    android:text="Check In"
+                    android:backgroundTint="#ff7ada4a"
                     android:textColor="#ffffffff" android:elegantTextHeight="false" android:clickable="false"/>
 
         </LinearLayout>
