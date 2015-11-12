@@ -47,7 +47,7 @@ public class CheckInActivity extends Activity
                 WifiInfo wInfo = wifiManager.getConnectionInfo();
                 String macAddress = wInfo.getMacAddress();
                         try {
-                            Socket connection = new Socket("192.169.1.2",85); //open connection with my local server ip
+                            Socket connection = new Socket("109.79.110.244",85); //open connection with my local server ip
                             DataOutputStream output = new DataOutputStream(connection.getOutputStream());
                             output.writeUTF(macAddress);
                             output.flush();
