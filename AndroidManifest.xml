@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!--  Entry for Login2Activity.class -->
+        <activity android:name="com.example.Defaultx.login2Activity"
+                  android:label="Login"></activity>
         <!--  Entry for RequestCodeActivity.class -->
         <activity android:name="com.example.Defaultx.RequestCode"
                   android:label="Request New Code"></activity>

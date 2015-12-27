@@ -6,7 +6,7 @@
         android:fillViewport="true">
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:background="#b9192497">
+            android:layout_height="wrap_content" android:background="#e2000418">
 
         <!-- CheckIn Form -->
         <LinearLayout
@@ -31,17 +31,33 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="30dip"
                       android:singleLine="true"
-                      android:hint="Email"
-                      android:password="false" android:id="@+id/email" android:backgroundTint="#594b4b47"/>
+                      android:hint="Security Code"
+                      android:password="true" android:id="@+id/sec_code" android:backgroundTint="#594b4b47"/>
             <!-- CheckIn button -->
-            <Button android:id="@+id/btnContinue"
+            <Button android:id="@+id/btnLogin"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:text="Continue"
+                    android:text="Check In"
                     android:textColor="#ffffff" android:elegantTextHeight="false" android:clickable="true"
-                    android:backgroundTint="#a41a3871" android:enabled="true"/>
+                    android:backgroundTint="#a4fa2400" android:enabled="true"/>
 
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dip"
+                      android:gravity="center"
+                      android:textSize="12dip"
+                      android:textColor="#e1ff2600" android:id="@+id/status"/>
+
+            <!-- Link to NewCode Screen -->
+            <TextView android:id="@+id/new_code"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dip"
+                      android:text="Request new pass"
+                      android:gravity="center"
+                      android:textSize="20dip"
+                      android:textColor="#ffffff"/>
 
         </LinearLayout>
         <!-- CheckIn Form Ends -->
