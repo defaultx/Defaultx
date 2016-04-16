@@ -6,7 +6,7 @@
         android:fillViewport="true">
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:background="#b9192497">
+            android:layout_height="wrap_content" android:background="#b93f4ddb">
 
         <!-- CheckIn Form -->
         <LinearLayout
@@ -31,8 +31,10 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="30dip"
                       android:singleLine="true"
+                      android:textColor="#ffffff"
                       android:hint="Email"
-                      android:password="false" android:id="@+id/email" android:backgroundTint="#594b4b47"/>
+                      android:password="false" android:id="@+id/email" android:backgroundTint="#594b4b47"
+                      android:autoText="false"/>
             <!-- CheckIn button -->
             <Button android:id="@+id/btnContinue"
                     android:layout_width="fill_parent"
@@ -40,7 +42,14 @@
                     android:layout_marginTop="10dip"
                     android:text="Continue"
                     android:textColor="#ffffff" android:elegantTextHeight="false" android:clickable="true"
-                    android:backgroundTint="#a41a3871" android:enabled="true"/>
+                    android:backgroundTint="#a4072371" android:enabled="true"/>
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dip"
+                      android:gravity="center"
+                      android:textSize="12dip"
+                      android:textColor="#e1ffd110" android:id="@+id/status"/>
 
 
         </LinearLayout>
