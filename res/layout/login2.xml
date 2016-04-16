@@ -31,6 +31,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="30dip"
                       android:singleLine="true"
+                      android:textColor="#ffffff"
                       android:hint="Security Code"
                       android:password="true" android:id="@+id/sec_code" android:backgroundTint="#594b4b47"/>
             <!-- CheckIn button -->

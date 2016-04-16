@@ -26,11 +26,14 @@ import java.net.UnknownHostException;
  */
 public class login2Activity extends Activity {
 
-    private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP(); //get address from CheckInActivity
-    private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
+   // private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP(); //get address from CheckInActivity
+   // private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
+   private static String serverIp = "192.169.1.7";
+    public static int port = 8080;
 
     private String macAddress = null;
     private String passCode = null;
+    private String email = null;
     private Context context;
     private int duration;
     private String userPass = null;
@@ -69,6 +72,7 @@ public class login2Activity extends Activity {
                 macAddress = wInfo.getMacAddress();
                 passCode = getIntent().getStringExtra("passCode");
                 userPass = String.valueOf(pass_field.getText());
+                email = getIntent().getStringExtra("email");
                 new connectToServer().execute();
             }
         });
@@ -81,11 +85,12 @@ public class login2Activity extends Activity {
     class connectToServer extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
+
             try {
                 Socket connection = new Socket(serverIp, port); //open connection with my local server ip
                 DataInputStream input = new DataInputStream(connection.getInputStream());
                 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-                output.writeUTF(macAddress);
+                output.writeUTF(macAddress+ ",mac"+ "," + email);
                 input.close();
                 output.flush();
                 output.close();
@@ -101,7 +106,6 @@ public class login2Activity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            TextView email = (TextView) findViewById(R.id.email);
             TextView status = (TextView) findViewById(R.id.status);
             Toast toast;
             toast = Toast.makeText(context, passCode, duration);

@@ -85,19 +85,6 @@ public class CheckInActivity extends Activity {
     }
 
     /**
-     * class extending appliation to pass on the server ip address and port
-     */
-    public class MainVar extends Application {
-
-        public String getServer_IP() {
-            return serverIp;
-        }
-        public int getServer_port() {
-            return port;
-        }
-    }
-
-    /**
      * AsyncTask to run the network operations. It is used to prevent NetworkOnMainThread Exception which is caused by
      * application attempts to perform a networking operation on its main thread
      */
@@ -138,6 +125,8 @@ public class CheckInActivity extends Activity {
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), login2Activity.class);
                 i.putExtra("passCode", passCode);
+                i.putExtra("email", email_address);
+
                 startActivity(i);
             } else {
                 toast = Toast.makeText(context, "No Connection to Server!", duration);

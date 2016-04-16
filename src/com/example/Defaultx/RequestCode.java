@@ -22,8 +22,10 @@ import java.net.UnknownHostException;
  */
 public class RequestCode extends Activity {
 
-    private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP();
-    private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
+    //private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP();
+    //private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
+    private static String serverIp = "192.169.1.7";
+    public static int port = 8080;
     private Context context;
     private int duration;
     private String email_address;
@@ -36,7 +38,8 @@ public class RequestCode extends Activity {
         Button btnCodeSent = (Button) findViewById(R.id.btnSndCode);
         TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
         TextView email = (TextView) findViewById(R.id.reg_email);
-
+        context = getApplicationContext();
+        duration = Toast.LENGTH_SHORT;
 
         // Listening to Login Screen link
         loginScreen.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +55,8 @@ public class RequestCode extends Activity {
         btnCodeSent.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                email_address = String.valueOf(email);
-
+                email_address = String.valueOf(email.getText());
+                new connectToServer().execute();
                 // Switching to New Code screen
             }
         });
@@ -70,7 +73,7 @@ public class RequestCode extends Activity {
                 Socket connection = new Socket(serverIp, port); //open connection with my local server ip
                 DataInputStream input = new DataInputStream(connection.getInputStream());
                 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-                output.writeUTF(email_address + ",getpass");
+                output.writeUTF(email_address + ",newPass");
                 input.close();
                 output.flush();
                 output.close();
