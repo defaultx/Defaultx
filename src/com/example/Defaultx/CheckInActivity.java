@@ -15,14 +15,16 @@ import com.androidhive.loginandregister.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class CheckInActivity extends Activity {
+
     private static String serverIp = "192.169.1.7";
     //private static String serverIp = "192.168.56.1";
-    private static int port = 8081;
+    private static int port = 8080;
     private Socket connection;
     private DataInputStream input;
     private DataOutputStream output;
@@ -31,6 +33,8 @@ public class CheckInActivity extends Activity {
     private int duration;
     private boolean success = false;
     protected String passCode = null;
+    protected String email_address = null;
+
 
 
 
@@ -43,8 +47,8 @@ public class CheckInActivity extends Activity {
         // setting default screen to login.xml
         setContentView(R.layout.login);
         Button btnContinue = (Button) findViewById(R.id.btnContinue);
-        TextView email = (TextView) findViewById(R.id.email);
         TextView status = (TextView) findViewById(R.id.status);
+        TextView email = (TextView) findViewById(R.id.email);
         context = getApplicationContext();
         duration = Toast.LENGTH_SHORT;
 
@@ -58,21 +62,13 @@ public class CheckInActivity extends Activity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new connectToServer().execute();
-                if (success) {
-                    // Switching to New Code screen
-                    Intent i = new Intent(getApplicationContext(), login2Activity.class);
-                    i.putExtra("passCode", passCode);
-                    startActivity(i);
+                email_address = String.valueOf(email.getText());
+                if (email_address != null && email_address.contains("@")) {
+                    new connectToServer().execute();
                 } else {
-                    Toast toast = Toast.makeText(context, "No Connection to Server!", duration);
-                    toast.show();
-                    //status.clearComposingText();
-                    status.setText("No connection to server!");
+                    status.setText("Please enter a valid email!");
                     status.setEnabled(true);
                 }
-                Toast toast = Toast.makeText(context, "AsyncTask Executed!", duration);
-                toast.show();
             }
         });
     }
@@ -88,53 +84,56 @@ public class CheckInActivity extends Activity {
     }
 
     class connectToServer extends AsyncTask<String, Void, String> {
-
-        String email_address = null;
-
         @Override
         protected String doInBackground(String... params) {
             try {
                 connection = new Socket(serverIp, port); //open connection with my local server ip
+                input = new DataInputStream(connection.getInputStream());
+                output = new DataOutputStream(connection.getOutputStream());
+                //output.writeUTF("helllloooooo");
+                output.writeUTF(email_address + ",getpass");
+               // output.writeUTF(email_address);
+                passCode = input.readUTF();
+                input.close();
+                output.flush();
+                output.close();
+                connection.close();
+                success = true;
+
             } catch (UnknownHostException e) {
                 System.out.println("***problem connecting to specified address***");
             } catch (IOException e) {
-                System.out.println("***problem connecting to port***");
+                System.out.println("***problem connecting to port***" + e);
             }
 
             return "Excuted";
         }
+
         @Override
         protected void onPostExecute(String result) {
             TextView email = (TextView) findViewById(R.id.email);
             TextView status = (TextView) findViewById(R.id.status);
-            try {
-                input = new DataInputStream(connection.getInputStream());
-                output = new DataOutputStream(connection.getOutputStream());
-                email_address = String.valueOf(email.getText());
-                Toast toast1 = Toast.makeText(context, email_address, duration);
-                toast1.show();
-                if (email_address != null && email_address.contains("@")) {
-                    output.writeBytes("helllloooooo");
-                    output.writeUTF(email_address);
-                    passCode = input.readUTF();
-
-                    Toast toast = Toast.makeText(context, passCode, duration);
-                    toast.show();
-                    input.close();
-                    output.flush();
-                    output.close();
-                    connection.close();
-                    success = true;
-                } else {
-                    status.setText("Please enter a valid email!");
-                    status.setEnabled(true);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            Toast toast;
+            toast = Toast.makeText(context, passCode, duration);
+            toast.show();
+            if (success) {
+                // Switching to New Code screen
+                Intent i = new Intent(getApplicationContext(), login2Activity.class);
+                i.putExtra("passCode", passCode);
+                startActivity(i);
+            } else {
+                toast = Toast.makeText(context, "No Connection to Server!", duration);
+                toast.show();
+                //status.clearComposingText();
+                status.setText("No connection to server!");
+                status.setEnabled(true);
             }
-        }
 
-            @Override
-            protected void onPreExecute() {}
-        }
+        toast = Toast.makeText(context, "AsyncTask Executed!", duration);
+        toast.show();
     }
+
+        @Override
+        protected void onPreExecute() {}
+    }
+}
