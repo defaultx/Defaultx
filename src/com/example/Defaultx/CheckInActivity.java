@@ -1,6 +1,7 @@
 package com.example.Defaultx;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -24,7 +25,7 @@ public class CheckInActivity extends Activity {
 
     private static String serverIp = "192.169.1.7";
     //private static String serverIp = "192.168.56.1";
-    private static int port = 8080;
+    public static int port = 8080;
     private Socket connection;
     private DataInputStream input;
     private DataOutputStream output;
@@ -83,6 +84,23 @@ public class CheckInActivity extends Activity {
         return activeNetworkInfo != null;
     }
 
+    /**
+     * class extending appliation to pass on the server ip address and port
+     */
+    public class MainVar extends Application {
+
+        public String getServer_IP() {
+            return serverIp;
+        }
+        public int getServer_port() {
+            return port;
+        }
+    }
+
+    /**
+     * AsyncTask to run the network operations. It is used to prevent NetworkOnMainThread Exception which is caused by
+     * application attempts to perform a networking operation on its main thread
+     */
     class connectToServer extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
