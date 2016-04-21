@@ -28,7 +28,7 @@ public class login2Activity extends Activity {
 
    // private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP(); //get address from CheckInActivity
    // private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
-   private static String serverIp = "192.169.1.7";
+   private static String serverIp = "192.169.1.15";
     public static int port = 8080;
 
     private String macAddress = null;
@@ -38,6 +38,11 @@ public class login2Activity extends Activity {
     private int duration;
     private String userPass = null;
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        passCode = getIntent().getStringExtra("passCode");
+    }
 
     /** Called when the activity is first created. */
     @Override
@@ -56,6 +61,7 @@ public class login2Activity extends Activity {
         newCodeScreen.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                passCode = null; //remove the pass code stored
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), RequestCode.class);
                 startActivity(i);
@@ -71,6 +77,7 @@ public class login2Activity extends Activity {
                 WifiInfo wInfo = wifiManager.getConnectionInfo();
                 macAddress = wInfo.getMacAddress();
                 passCode = getIntent().getStringExtra("passCode");
+                System.out.println(passCode);
                 userPass = String.valueOf(pass_field.getText());
                 email = getIntent().getStringExtra("email");
                 new connectToServer().execute();
@@ -107,22 +114,22 @@ public class login2Activity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             TextView status = (TextView) findViewById(R.id.status);
-            Toast toast;
-            toast = Toast.makeText(context, passCode, duration);
-            toast.show();
-            if (passCode.equals(userPass)){
+            //Toast toast;
+            //toast = Toast.makeText(context, passCode, duration); // for debug
+            //toast.show();
+            if (passCode != null && passCode.equals(userPass)){
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), MainPage.class);
-                i.putExtra("KEY_StringMacAddress", macAddress);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //all of the other activities on top will be closed.cant go back
+                i.putExtra("MacAddress", macAddress);
                 startActivity(i);
+                finish();
             }
             else {
+                status.setText(""); //clear text
                 status.setText("Wrong Security Code! Try Again!");
                 status.setEnabled(true);
             }
-
-            toast = Toast.makeText(context, "AsyncTask Executed!", duration);
-            toast.show();
         }
 
         @Override

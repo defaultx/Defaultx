@@ -22,7 +22,7 @@ public class MainPage extends Activity {
         setContentView(R.layout.main);
         TextView macAddressField = (TextView) findViewById(R.id.macAdressField);
         //macAddressField.append(mac);
-        macAddressField.setText(getIntent().getStringExtra("KEY_StringMacAddress"));
+        macAddressField.setText(getIntent().getStringExtra("MacAddress"));
 
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Check if the smartphone has NFC

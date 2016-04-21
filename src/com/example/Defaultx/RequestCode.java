@@ -19,12 +19,14 @@ import java.net.UnknownHostException;
 
 /**
  * Created by rahul on 05/11/2015.
+ * class to connect to the server and request for a new password with user email
+ * uses Async Task to connect to server and send/recieve data
  */
 public class RequestCode extends Activity {
 
     //private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP();
     //private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
-    private static String serverIp = "192.169.1.7";
+    private static String serverIp = "192.169.1.15";
     public static int port = 8080;
     private Context context;
     private int duration;
@@ -38,6 +40,7 @@ public class RequestCode extends Activity {
         Button btnCodeSent = (Button) findViewById(R.id.btnSndCode);
         TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
         TextView email = (TextView) findViewById(R.id.reg_email);
+        TextView status = (TextView) findViewById(R.id.status);
         context = getApplicationContext();
         duration = Toast.LENGTH_SHORT;
 
@@ -56,8 +59,12 @@ public class RequestCode extends Activity {
 
             public void onClick(View v) {
                 email_address = String.valueOf(email.getText());
-                new connectToServer().execute();
-                // Switching to New Code screen
+                if(email_address != null && email_address.contains("@")) {
+                    new connectToServer().execute();
+                }else {
+                    status.setText("Please enter a valid email.");
+                    status.setEnabled(true);
+                }
             }
         });
     }
@@ -67,6 +74,9 @@ public class RequestCode extends Activity {
      * application attempts to perform a networking operation on its main thread
      */
     class connectToServer extends AsyncTask<String, Void, String> {
+        String passCode;
+        TextView status = (TextView) findViewById(R.id.status);
+
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -74,12 +84,12 @@ public class RequestCode extends Activity {
                 DataInputStream input = new DataInputStream(connection.getInputStream());
                 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
                 output.writeUTF(email_address + ",newPass");
+                passCode = input.readUTF();
                 input.close();
                 output.flush();
                 output.close();
                 connection.close();
                 success = true;
-
             } catch (UnknownHostException e) {
                 System.out.println("***problem connecting to specified address***");
             } catch (IOException e) {
@@ -97,14 +107,16 @@ public class RequestCode extends Activity {
             if (success) {
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), codeSent.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //all of the other activities on top will be closed. cant go back
+                i.putExtra("passCode", passCode);
                 startActivity(i);
                 finish();
             } else {
                 toast = Toast.makeText(context, "No Connection to Server!", duration);
                 toast.show();
+                status.setText("No Connection to Server!");
+                status.setEnabled(true);
             }
-            toast = Toast.makeText(context, "AsyncTask Executed!", duration);
-            toast.show();
         }
 
         @Override

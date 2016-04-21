@@ -23,7 +23,7 @@ import java.net.UnknownHostException;
 
 public class CheckInActivity extends Activity {
 
-    private static String serverIp = "192.169.1.7";
+    private static String serverIp = "192.169.1.15";
     //private static String serverIp = "192.168.56.1";
     public static int port = 8080;
     private Socket connection;
@@ -54,10 +54,9 @@ public class CheckInActivity extends Activity {
         duration = Toast.LENGTH_SHORT;
 
         if (!isNetworkAvailable()) {
+            status.setText("");
             status.setText("No network connection!");
             status.setEnabled(true);
-            Toast toast = Toast.makeText(context, "No network connection!", duration);
-            toast.show();
         }
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +66,7 @@ public class CheckInActivity extends Activity {
                 if (email_address != null && email_address.contains("@")) {
                     new connectToServer().execute();
                 } else {
+                    status.setText("");
                     status.setText("Please enter a valid email!");
                     status.setEnabled(true);
                 }
@@ -95,9 +95,7 @@ public class CheckInActivity extends Activity {
                 connection = new Socket(serverIp, port); //open connection with my local server ip
                 input = new DataInputStream(connection.getInputStream());
                 output = new DataOutputStream(connection.getOutputStream());
-                //output.writeUTF("helllloooooo");
                 output.writeUTF(email_address + ",getpass");
-               // output.writeUTF(email_address);
                 passCode = input.readUTF();
                 input.close();
                 output.flush();
@@ -116,28 +114,22 @@ public class CheckInActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            TextView email = (TextView) findViewById(R.id.email);
             TextView status = (TextView) findViewById(R.id.status);
+            /* //for debugging
             Toast toast;
             toast = Toast.makeText(context, passCode, duration);
-            toast.show();
+            toast.show();*/
             if (success) {
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), login2Activity.class);
                 i.putExtra("passCode", passCode);
                 i.putExtra("email", email_address);
-
                 startActivity(i);
             } else {
-                toast = Toast.makeText(context, "No Connection to Server!", duration);
-                toast.show();
-                //status.clearComposingText();
+                status.setText("");
                 status.setText("No connection to server!");
                 status.setEnabled(true);
             }
-
-        toast = Toast.makeText(context, "AsyncTask Executed!", duration);
-        toast.show();
     }
 
         @Override

@@ -37,6 +37,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text="Send Code" android:backgroundTint="#ffff397a" android:textColor="#ffffffff"/>
+            <!-- status text view -->
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dip"
+                      android:gravity="center"
+                      android:textSize="12dip"
+                      android:textColor="#e1ffd110" android:id="@+id/status"/>
             <!-- Link to Login Screen -->
             <TextView android:id="@+id/link_to_login"
                       android:layout_width="fill_parent"
