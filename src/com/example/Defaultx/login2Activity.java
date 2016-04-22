@@ -37,6 +37,7 @@ public class login2Activity extends Activity {
     private Context context;
     private int duration;
     private String userPass = null;
+    private String room = null;
 
     @Override
     public void onResume(){
@@ -98,6 +99,8 @@ public class login2Activity extends Activity {
                 DataInputStream input = new DataInputStream(connection.getInputStream());
                 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
                 output.writeUTF(macAddress+ ",mac"+ "," + email);
+                room = input.readUTF();
+                System.out.println("room: " + room);
                 input.close();
                 output.flush();
                 output.close();
@@ -121,7 +124,8 @@ public class login2Activity extends Activity {
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), MainPage.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //all of the other activities on top will be closed.cant go back
-                i.putExtra("MacAddress", macAddress);
+                //i.putExtra("MacAddress", macAddress);
+                i.putExtra("room", room);
                 startActivity(i);
                 finish();
             }

@@ -21,9 +21,10 @@ public class MainPage extends Activity {
         NfcAdapter nfcAdpt;
         // Set View to main.xml
         setContentView(R.layout.main);
-        TextView macAddressField = (TextView) findViewById(R.id.macAdressField);
+        TextView macAddressField = (TextView) findViewById(R.id.room_field);
         //macAddressField.append(mac);
-        macAddressField.setText(getIntent().getStringExtra("MacAddress"));
+        //macAddressField.setText(getIntent().getStringExtra("MacAddress"));
+        macAddressField.setText("Your room number: " + getIntent().getStringExtra("room"));
 
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Check if the smartphone has NFC
