@@ -1,6 +1,7 @@
 package com.example.Defaultx;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.View;
@@ -32,9 +33,10 @@ public class MainPage extends Activity {
         }
         // Check if NFC is enabled
         if (!nfcAdpt.isEnabled()) {
-            Toast.makeText(this, "Enable NFC before using the app", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Enable NFC before using the app", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please activate NFC and press Back to return to the application!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
         }
-
         Button btnCheckOut = (Button) findViewById(R.id.btnCheckOut);
         // Listening to Login Screen link
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
