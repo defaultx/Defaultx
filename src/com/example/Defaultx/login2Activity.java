@@ -26,9 +26,9 @@ import java.net.UnknownHostException;
  */
 public class login2Activity extends Activity {
 
-   // private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP(); //get address from CheckInActivity
-   // private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
-   private static String serverIp = "192.169.1.15";
+    // private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP(); //get address from CheckInActivity
+    // private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
+    private static String serverIp = "192.169.1.15";
     public static int port = 8080;
 
     private String macAddress = null;
@@ -40,12 +40,14 @@ public class login2Activity extends Activity {
     private String room = null;
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         passCode = getIntent().getStringExtra("passCode");
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +100,7 @@ public class login2Activity extends Activity {
                 Socket connection = new Socket(serverIp, port); //open connection with my local server ip
                 DataInputStream input = new DataInputStream(connection.getInputStream());
                 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-                output.writeUTF(macAddress+ ",mac"+ "," + email);
+                output.writeUTF(macAddress + ",mac" + "," + email);
                 room = input.readUTF();
                 System.out.println("room: " + room);
                 input.close();
@@ -120,7 +122,7 @@ public class login2Activity extends Activity {
             //Toast toast;
             //toast = Toast.makeText(context, passCode, duration); // for debug
             //toast.show();
-            if (passCode != null && passCode.equals(userPass)){
+            if (passCode != null && passCode.equals(userPass)) {
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), MainPage.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //all of the other activities on top will be closed.cant go back
@@ -128,8 +130,7 @@ public class login2Activity extends Activity {
                 i.putExtra("room", room);
                 startActivity(i);
                 finish();
-            }
-            else {
+            } else {
                 status.setText(""); //clear text
                 status.setText("Wrong Security Code! Try Again!");
                 status.setEnabled(true);
@@ -137,6 +138,7 @@ public class login2Activity extends Activity {
         }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+        }
     }
 }

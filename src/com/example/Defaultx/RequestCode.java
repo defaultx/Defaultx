@@ -59,9 +59,9 @@ public class RequestCode extends Activity {
 
             public void onClick(View v) {
                 email_address = String.valueOf(email.getText());
-                if(email_address != null && email_address.contains("@")) {
+                if (email_address != null && email_address.contains("@")) {
                     new connectToServer().execute();
-                }else {
+                } else {
                     status.setText("Please enter a valid email.");
                     status.setEnabled(true);
                 }
@@ -120,6 +120,7 @@ public class RequestCode extends Activity {
         }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+        }
     }
 }

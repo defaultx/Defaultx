@@ -37,8 +37,6 @@ public class CheckInActivity extends Activity {
     protected String email_address = null;
 
 
-
-
     /**
      * Called when the activity is first created.
      */
@@ -130,9 +128,10 @@ public class CheckInActivity extends Activity {
                 status.setText("No connection to server!");
                 status.setEnabled(true);
             }
-    }
+        }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+        }
     }
 }
