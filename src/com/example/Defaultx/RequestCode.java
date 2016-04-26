@@ -26,7 +26,7 @@ public class RequestCode extends Activity {
 
     //private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP();
     //private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
-    private static String serverIp = "192.169.1.15";
+    private static String serverIp = "192.168.1.2";
     public static int port = 8080;
     private Context context;
     private int duration;

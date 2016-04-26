@@ -23,7 +23,7 @@ import java.net.UnknownHostException;
 
 public class CheckInActivity extends Activity {
 
-    private static String serverIp = "192.169.1.15";
+    private static String serverIp = "192.168.1.2";
     //private static String serverIp = "192.168.56.1";
     public static int port = 8080;
     private Socket connection;

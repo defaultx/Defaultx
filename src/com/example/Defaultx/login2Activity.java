@@ -28,7 +28,7 @@ public class login2Activity extends Activity {
 
     // private String serverIp = ((CheckInActivity.MainVar) this.getApplication()).getServer_IP(); //get address from CheckInActivity
     // private int port = ((CheckInActivity.MainVar) this.getApplication()).getServer_port();
-    private static String serverIp = "192.169.1.15";
+    private static String serverIp = "192.168.1.2";
     public static int port = 8080;
 
     private String macAddress = null;
@@ -113,7 +113,7 @@ public class login2Activity extends Activity {
                 System.out.println("***problem connecting to port***" + e);
             }
 
-            return "Excuted";
+            return "Executed";
         }
 
         @Override
@@ -122,7 +122,7 @@ public class login2Activity extends Activity {
             //Toast toast;
             //toast = Toast.makeText(context, passCode, duration); // for debug
             //toast.show();
-            if (passCode != null && passCode.equals(userPass)) {
+            if (passCode != null && passCode.equals(userPass) && !passCode.isEmpty() && passCode != "") {
                 // Switching to New Code screen
                 Intent i = new Intent(getApplicationContext(), MainPage.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //all of the other activities on top will be closed.cant go back
